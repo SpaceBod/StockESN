@@ -26,15 +26,16 @@ esn = ESN(n_inputs = 1,
       spectral_radius = spectral_radius,
       noise=noise)
 
-trainlen = 2700
-future = 2
-futureTotal = 300
+trainlen = 2800
+future = 5
+futureTotal = 200
 pred_tot=np.zeros(futureTotal)
 
 for i in range(0,futureTotal,future):
     pred_training = esn.fit(np.ones(trainlen),data[i:trainlen+i])
     prediction = esn.predict(np.ones(future))
     pred_tot[i:i+future] = prediction[:,0]
+    print(prediction)
 
 
 plt.figure(figsize=(16,8))
@@ -45,7 +46,7 @@ plt.plot(range(trainlen,trainlen+futureTotal),pred_tot,'k',  alpha=0.8, label='E
 lo,hi = plt.ylim()
 plt.plot([trainlen,trainlen],[lo+np.spacing(1),hi-np.spacing(1)],'k:', linewidth=4)
 
-plt.title(r'Ground Truth and Echo State Network Output', fontsize=25)
+plt.title(r'Stock Predicitons: APPLE', fontsize=25)
 plt.xlabel(r'Time (Days)', fontsize=20,labelpad=10)
 plt.ylabel(r'Price ($)', fontsize=20,labelpad=10)
 plt.legend(fontsize='xx-large', loc='best')
